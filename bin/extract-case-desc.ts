@@ -2,11 +2,7 @@ import { parse, ParserPlugin } from "@babel/parser";
 import traverse from "@babel/traverse";
 
 export function extractCaseDesc(code: string, isTs = false): string[] {
-  const plugins: ParserPlugin[] = [
-    "decorators",
-    "decorators-legacy",
-    "classProperties",
-  ];
+  const plugins: ParserPlugin[] = ["decorators", "classProperties"];
 
   const ast = parse(code, {
     sourceType: "module",
