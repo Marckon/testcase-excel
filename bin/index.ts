@@ -71,10 +71,11 @@ import chalk from "chalk";
           desc,
         });
       }
-      // 通过文件流写文件
-      await workbook.xlsx.writeFile("testcase.xlsx");
-      console.log(chalk.green("文件已创建"));
-      process.exit(0);
     }
+
+    // 通过文件流写文件
+    await workbook.xlsx.writeFile("testcase.xlsx");
+    console.log(chalk.green("文件已创建"));
+    process.exit(0);
   }
 })();
