@@ -14,7 +14,7 @@ export function extractCaseDesc(code: string, isTs = false): string[] {
   traverse(ast, {
     CallExpression(path) {
       if (
-        ["describe", "it"].includes(path.node.callee.name) &&
+        ["describe", "it", "test"].includes(path.node.callee.name) &&
         path.node.arguments.length > 0 &&
         (path.node.arguments[0].type === "StringLiteral" ||
           path.node.arguments[0].type === "TemplateLiteral")
