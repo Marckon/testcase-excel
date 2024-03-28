@@ -1,10 +1,16 @@
-import { parse } from "@babel/parser";
+import { parse, ParserPlugin } from "@babel/parser";
 import traverse from "@babel/traverse";
 
 export function extractCaseDesc(code: string, isTs = false): string[] {
+  const plugins: ParserPlugin[] = [
+    "decorators",
+    "decorators-legacy",
+    "classProperties",
+  ];
+
   const ast = parse(code, {
     sourceType: "module",
-    plugins: isTs ? ["typescript"] : [],
+    plugins: isTs ? [...plugins, "typescript"] : plugins,
   });
 
   const desc: string[] = [];
