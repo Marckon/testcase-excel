@@ -1,7 +1,11 @@
 import { parse, ParserPlugin } from "@babel/parser";
 import traverse from "@babel/traverse";
 
-export function extractCaseDesc(code: string, isTs = false): string[] {
+export function extractCaseDesc(
+  code: string,
+  testFnNam: string[],
+  isTs = false,
+): string[] {
   const plugins: ParserPlugin[] = ["decorators", "classProperties"];
 
   const ast = parse(code, {
@@ -14,7 +18,7 @@ export function extractCaseDesc(code: string, isTs = false): string[] {
   traverse(ast, {
     CallExpression(path) {
       if (
-        ["describe", "it", "test"].includes(path.node.callee.name) &&
+        testFnNam.includes(path.node.callee.name) &&
         path.node.arguments.length > 0 &&
         (path.node.arguments[0].type === "StringLiteral" ||
           path.node.arguments[0].type === "TemplateLiteral")

@@ -21,6 +21,10 @@ import chalk from "chalk";
       "指定文件目录，按照其次级目录名创建用例标签，如果未匹配到直接以文件名作为用例标签",
     default: "plugins,framework",
   });
+  const testFnName = await input({
+    message: "请输入测试方法名，将提取该方法第一个参数作为用例描述",
+    default: "describe,it,test",
+  });
 
   const filePaths = await glob(testfilePattern);
   console.log(filePaths);
@@ -60,7 +64,11 @@ import chalk from "chalk";
       }
 
       const content = fs.readFileSync(filePath, "utf-8");
-      const descs = extractCaseDesc(content, /\.ts$/.test(filePath));
+      const descs = extractCaseDesc(
+        content,
+        testFnName.split(","),
+        /\.ts$/.test(filePath),
+      );
 
       for (const desc of descs) {
         worksheet.addRow({
